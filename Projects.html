@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Cacx Red Electric</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --bg-color: #0b0b0b;
+            --text-color: #f8f8f8;
+            --accent-color: #e70000; /* Deep Red Theme */
+            --secondary-bg: #1a1a1a;
+            --card-bg: rgba(21, 21, 21, 0.95);
+            --input-bg: rgba(26, 26, 26, 0.5);
+        }
+
+        /* --- BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-color); 
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            position: relative; 
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            position: fixed;
+            width: 100%;
+            z-index: 100; 
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+
+        .navbar nav a {
+            margin-left: 30px;
+            font-size: 16px;
+            /* HARMONY FIX: Smooth transition for links */
+            transition: color 0.3s ease, border-bottom 0.3s ease; 
+        }
+        
+        /* Set Projects link as active */
+        .navbar nav a.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* --- PROJECTS PAGE CONTENT STYLES --- */
+        .projects-section {
+            padding: 120px 8% 80px; 
+            min-height: 100vh;
+            text-align: center; 
+            position: relative; 
+            z-index: 20; 
+        }
+        
+        .projects-header {
+            margin-bottom: 50px;
+            padding-top: 10px; 
+        }
+
+        .projects-header h1 {
+            font-size: 60px;
+            color: var(--accent-color);
+            margin-top: 5px;
+            text-shadow: 0 0 10px rgba(231, 0, 0, 0.5); 
+            border-bottom: 3px solid var(--accent-color); 
+            display: inline-block;
+            padding-bottom: 5px;
+            background: rgba(10, 10, 10, 0.8); 
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase; 
+        }
+        
+        /* New Video Grid Styles */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .video-card {
+            background: var(--card-bg); 
+            backdrop-filter: blur(5px); 
+            border-radius: 10px;
+            overflow: hidden; 
+            box-shadow: 0 0 10px rgba(231, 0, 0, 0.3); 
+            border: 2px solid rgba(231, 0, 0, 0.4); 
+            transition: all 0.3s ease; 
+            animation: glowing-border 2s infinite alternate ease-in-out; 
+            text-align: left;
+        }
+
+        /* Hover effect is stronger and pauses the glow animation */
+        .video-card:hover {
+            transform: scale(1.03);
+            border-color: var(--accent-color); 
+            box-shadow: 0 10px 30px rgba(231, 0, 0, 0.6), 0 0 40px var(--accent-color); 
+            animation-play-state: paused; 
+        }
+
+        /* Video element inside the card */
+        .video-card video {
+            display: block;
+            width: 100%;
+            height: auto; 
+            object-fit: cover;
+            min-height: 250px; 
+        }
+        
+        .video-details {
+            padding: 20px;
+        }
+        
+        .video-details h3 {
+            color: var(--accent-color);
+            font-size: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(231, 0, 0, 0.3);
+            padding-bottom: 5px;
+        }
+        
+        .video-details p {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        /* --- KEYFRAMES FOR CONTINUOUS GLOW (Reused) --- */
+        @keyframes glowing-border {
+            0% {
+                box-shadow: 0 0 10px rgba(231, 0, 0, 0.3);
+                border-color: rgba(231, 0, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(231, 0, 0, 0.6);
+                border-color: rgba(231, 0, 0, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(231, 0, 0, 0.3);
+                border-color: rgba(231, 0, 0, 0.4);
+            }
+        }
+        
+        /* --- Responsive adjustments --- */
+        @media (max-width: 992px) {
+             .projects-header h1 {
+                font-size: 50px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .projects-header h1 {
+                font-size: 40px;
+            }
+            .video-grid {
+                gap: 20px;
+            }
+            .navbar {
+                padding: 15px 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Portfolio</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a> 
+            <a href="projects.html" class="active">Projects</a> 
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="projects-section">
+            <div class="projects-header">
+                <h1>Fun Projects</h1>
+            </div>
+
+            <div class="video-grid">
+                
+                <div class="video-card">
+                    <video autoplay loop muted playsinline>
+                      <source src="https://www.dropbox.com/scl/fi/rfh726yo8jdya4b7q76vo/SnapTik-dot-Kim-e5f79de4b445b7717435f14a38901082.mp4?rlkey=y0c00yjm09x931maokfwjp81o&st=5w9s1mrf&raw=1" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                    <div class="video-details">
+                        <h3>Flowers HTML</h3>
+                        <p>A beautiful, responsive HTML page dedicated to visualizing floral designs using CSS art and simple animation techniques.</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <video autoplay loop muted playsinline>
+                      <source src="https://www.dropbox.com/scl/fi/dqlm2paoxf1tvem6l0wwa/SnapTik-dot-Kim-4b3210adddbabb80c2aef26c6f09a6e1.mp4?rlkey=ineuu93crvgisp8xwigzyt9w2&st=y7n01nz8&raw=1" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                    <div class="video-details">
+                        <h3>Interactive Reptile HTML</h3>
+                        <p>A fun, engaging project showcasing an interactive model or gallery of reptiles, built with dynamic HTML and JavaScript interactions.</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <video autoplay loop muted playsinline>
+                      <source src="https://www.dropbox.com/scl/fi/9cntrz222lko3xjhz2pwx/SnapTik-dot-Kim-d1232d4b0d6754b4312394dbcc739e94.mp4?rlkey=3o5jy7wguqygikvab25hre58r&st=wldoahoi&raw=1" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                    <div class="video-details">
+                        <h3>Interactive Dragon HTML</h3>
+                        <p>A powerful showcase featuring a dragon-themed page with complex CSS animations and user-controlled interactive elements.</p>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </section>
+    </main>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        // Only essential scripts or utility scripts would go here now.
+    </script>
+</body>
+</html>
