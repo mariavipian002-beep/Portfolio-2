@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me - Cacx Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* --- VARIABLES (Copied from your existing files) --- */
+        :root {
+            --bg-color: #0b0b0b;
+            --text-color: #f8f8f8;
+            --accent-color: #e70000; /* Deep Red Theme */
+            --secondary-bg: #1a1a1a;
+            --card-bg: rgba(26, 26, 26, 0.7); /* Slightly transparent dark for cards */
+            --input-bg: rgba(26, 26, 26, 0.5); /* Even more transparent for input fields */
+        }
+
+        /* --- BASE STYLES (Copied from your existing files) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color); /* Fallback */
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh; 
+            overflow-x: hidden;
+            position: relative; 
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* --- BACKGROUND CANVAS FOR GALACTIC EFFECT --- */
+        #galactic-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* Behind all content */
+            pointer-events: none; /* Allows clicks to pass through */
+        }
+
+        /* --- NAVBAR (Copied from your existing files) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+
+        .navbar nav a {
+            margin-left: 30px;
+            font-size: 16px;
+            /* HARMONY FIX: Smooth transition for links */
+            transition: color 0.3s ease, border-bottom 0.3s ease; 
+        }
+
+        .navbar nav a.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* --- BUTTONS (Copied from your existing files, slightly adjusted for form) --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            transition: all 0.3s;
+            cursor: pointer; /* Indicate it's clickable */
+            font-size: 16px;
+        }
+
+        .btn.primary {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn.primary:hover {
+            background: transparent;
+            color: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color); /* Add a subtle glow on hover */
+        }
+        
+        /* --- CONTACT PAGE SPECIFIC STYLES --- */
+        .contact-page-section {
+            padding: 120px 8% 80px; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; 
+            z-index: 10;
+        }
+        
+        .contact-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .contact-header h1 {
+            font-size: 55px;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(231, 0, 0, 0.5); /* Subtle glow */
+        }
+        
+        .contact-header p {
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Contact info on left, form on right */
+            gap: 40px;
+            max-width: 1200px;
+            width: 100%;
+            background: var(--card-bg); /* Use card-bg for the whole container to define it */
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(231, 0, 0, 0.2), 0 0 60px rgba(231, 0, 0, 0.1); /* Red glow shadow */
+            border: 1px solid rgba(231, 0, 0, 0.2);
+            backdrop-filter: blur(5px); /* Subtle blur for transparency */
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-card {
+            background: var(--input-bg); /* Use input-bg for individual cards */
+            padding: 25px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(231, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(231, 0, 0, 0.3);
+        }
+
+        .info-card .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: var(--bg-color);
+            box-shadow: 0 0 10px var(--accent-color); /* Icon glow */
+        }
+
+        .info-card .details h4 {
+            font-size: 18px;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .info-card .details p,
+        .info-card .details a {
+            font-size: 15px;
+            color: #ccc;
+            text-decoration: none;
+            word-break: break-all; /* For long emails/numbers */
+        }
+
+        .info-card .details a:hover {
+            color: var(--accent-color);
+        }
+
+        .contact-form form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1; /* Spans full width for message and button */
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(231, 0, 0, 0.3); /* Red border */
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #888;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(231, 0, 0, 0.5); /* Glow on focus */
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form .btn {
+            width: auto; /* Button doesn't need to span full input width */
+            grid-column: 1 / -1; /* Spans full width for alignment */
+            margin-top: 10px;
+            display: flex; /* To center icon */
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-form .btn i {
+            font-size: 18px;
+        }
+        
+        /* --- Responsive adjustments --- */
+        @media (max-width: 900px) {
+            .contact-container {
+                grid-template-columns: 1fr; /* Stack cards and form vertically */
+                padding: 30px;
+            }
+            .contact-form form {
+                grid-template-columns: 1fr; /* Stack form fields vertically */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .contact-page-section {
+                padding: 100px 5% 50px;
+            }
+            .contact-header h1 {
+                font-size: 40px;
+            }
+            .contact-header p {
+                font-size: 16px;
+            }
+            .info-card {
+                flex-direction: column; /* Stack icon and text */
+                text-align: center;
+                gap: 10px;
+                padding: 20px;
+            }
+            .info-card .icon {
+                margin-bottom: 10px;
+            }
+            .navbar {
+                padding: 15px 5%;
+            }
+            .navbar nav a {
+                margin-left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="galactic-canvas"></canvas>
+
+    <header class="navbar">
+        <div class="logo">Portfolio</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html" class="active">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-page-section">
+            <div class="contact-header">
+                <h1>Let's Connect & Create!</h1>
+                <p>Have a project in mind or just want to chat? I'd love to hear from you.</p>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="info-card">
+                        <div class="icon"><i class="fas fa-envelope"></i></div>
+                        <div class="details">
+                            <h4>Email Me</h4>
+                            <p>
+                                <a href="mailto:cacxton186@gmail.com">cacxton186@gmail.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="details">
+                            <h4>Call Me</h4>
+                            <p>
+                                <a href="tel:+254799237950">+254 799 237950</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="details">
+                            <h4>Location</h4>
+                            <p>Nairobi, Kenya</p>
+                            <a href="https://maps.app.goo.gl/YourActualLocation" target="_blank">View on Map</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form action="https://formspree.io/f/yourformid" method="POST">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <input type="text" name="subject" placeholder="Subject">
+                        </div>
+                        <div class="form-group full-width">
+                            <textarea name="message" placeholder="Just chat or project details..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <button type="submit" class="btn primary">
+                                Send Message <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        // Galactic Particles Background Script
+        const canvas = document.getElementById('galactic-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const numParticles = 100; // Number of glowing red particles
+        const numStars = 200; // Number of small, subtle background stars
+        const accentColor = "#e70000"; // Your theme's accent color
+
+        // Particle class for the glowing red elements
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = Math.random() * 2 + 1; // 1 to 3 pixels
+                this.speedX = (Math.random() * 0.5 - 0.25); // -0.25 to 0.25
+                this.speedY = (Math.random() * 0.5 - 0.25);
+                this.opacity = Math.random(); // Initial opacity
+                this.fadeSpeed = Math.random() * 0.01 + 0.005; // 0.005 to 0.015
+                this.glowSize = Math.random() * 15 + 5; // 5 to 20 pixels glow
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Loop particles when they go off-screen
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+
+                this.opacity -= this.fadeSpeed;
+                if (this.opacity <= 0) {
+                    this.opacity = 1; // Reset opacity
+                    this.x = Math.random() * canvas.width; // New random position
+                    this.y = Math.random() * canvas.height;
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(231, 0, 0, ${this.opacity})`; // Red with varying opacity
+                
+                // Add glow effect
+                ctx.shadowColor = accentColor;
+                ctx.shadowBlur = this.glowSize;
+                ctx.fill();
+                ctx.shadowBlur = 0; // Reset shadow blur for other drawings
+            }
+        }
+
+        // Star class for the subtle background stars
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 0.8 + 0.2; // Very small stars
+                this.opacity = Math.random();
+                this.blinkSpeed = Math.random() * 0.005 + 0.001; // Slower fade for stars
+                this.direction = Math.random() > 0.5 ? 1 : -1;
+            }
+
+            update() {
+                this.opacity += this.blinkSpeed * this.direction;
+                if (this.opacity > 1 || this.opacity < 0) {
+                    this.direction *= -1; // Reverse fading direction
+                    this.opacity = Math.max(0, Math.min(1, this.opacity)); // Clamp opacity
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.5})`; // Subtle white stars
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles and stars
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+            }
+            stars = [];
+            for (let i = 0; i < numStars; i++) {
+                stars.push(new Star());
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear entire canvas
+
+            // Draw a subtle dark red background gradient behind particles
+            const gradient = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0,
+                canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height) / 2
+            );
+            gradient.addColorStop(0, 'rgba(26, 0, 0, 0.4)'); // Dark red center
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)'); // Black outer space
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw stars first (background layer)
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+
+            // Update and draw particles (foreground layer)
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+        }
+
+        // Handle window resizing
+        window.addEventListener('resize', init);
+
+        // Start animation
+        init();
+        animate();
+    </script>
+</body>
+</html>
